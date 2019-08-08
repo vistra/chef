@@ -1,4 +1,5 @@
 import * as assert from "assert";
+import * as _ from 'lodash';
 
 export interface ICakeDecoration {
     x: number,
@@ -65,22 +66,7 @@ class GameState {
     state: "dish_in_making" | "ingredients_mixed" | "dish_decorated" | "player_took_dish" | "dish_in_tool" | "dish_cooked" | "player_took_cooked_dish";
 
     constructor() {
-        this.objective = {
-            dish: 'cake',
-            ingredients: [
-                // {item: Item.Oil, count: 1},
-                // {item: Item.Egg, count: 1},
-                // {item: Item.Chocolate, count: 1},
-                // {item: Item.Flour, count: 1},
-                // {item: Item.Butter, count: 1},
-            ]
-        };
-        this.putItem(Item.Egg, ItemLocation.Fridge, 5);
-        this.putItem(Item.Butter, ItemLocation.Fridge, 3);
-        this.putItem(Item.Oil, ItemLocation.Cabinet, 3);
-        this.putItem(Item.Flour, ItemLocation.Cabinet, 3);
-        this.putItem(Item.Chocolate, ItemLocation.Cabinet, 5);
-        this.state = 'dish_in_making';
+        this.newGame();
     }
 
     getNextObjectiveStep(): IObjective['ingredients'][0] {
@@ -111,10 +97,15 @@ class GameState {
         }
     }
 
+    private setItemCount(item: Item, loc: ItemLocation, count) {
+        this.items[loc] = this.items[loc] || {};
+        this.items[loc][item] = count
+    }
+
     private putItem(item: Item, loc: ItemLocation, count: number = 1) {
         this.items[loc] = this.items[loc] || {};
         this.items[loc][item] = this.items[loc][item] || 0;
-        this.items[loc][item] += count;
+        this.setItemCount(item, loc, this.items[loc][item] + count);
     }
 
     private removeItem(item: Item, loc: ItemLocation) {
@@ -166,6 +157,31 @@ class GameState {
 
     playerTookDishFromTool() {
         this.state = 'player_took_cooked_dish';
+    }
+
+    newGame() {
+        this.objective = {
+            dish: 'cake',
+            ingredients: _.shuffle([
+                {item: Item.Oil, count: _.random(1,3)},
+                {item: Item.Egg, count: _.random(1,3)},
+                {item: Item.Chocolate, count: _.random(1,3)},
+                {item: Item.Flour, count: _.random(1,3)},
+                {item: Item.Butter, count: _.random(1,3)},
+            ])
+        };
+        this.setItemCount(Item.Egg, ItemLocation.Fridge, 5);
+        this.setItemCount(Item.Butter, ItemLocation.Fridge, 3);
+        this.setItemCount(Item.Oil, ItemLocation.Cabinet, 3);
+        this.setItemCount(Item.Flour, ItemLocation.Cabinet, 3);
+        this.setItemCount(Item.Chocolate, ItemLocation.Cabinet, 5);
+
+        this.dishDecoration = null;
+        this.state = 'dish_in_making';
+        this.player = {
+            holds: null,
+            itemOrigin: null
+        };
     }
 }
 

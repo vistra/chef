@@ -60,10 +60,8 @@ export class FridgeScene extends Phaser.Scene {
                 this.items[item].scaleX,
                 this.items[item].scaleY,
             );
-            let leaving = false;
             this.items[item].itemRenderer.onPointerDown(() => {
-                if (!leaving) {
-                    leaving = true;
+                if (!this.leaving) {
                     gameState.playerTakenItem(item as Item, ItemLocation.Fridge);
                     this.backToKitchen();
                 }

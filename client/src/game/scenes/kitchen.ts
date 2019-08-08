@@ -110,7 +110,16 @@ export class KitchenScene extends Phaser.Scene {
         this.dishInTool = new Cake(this, 445, 265, 0.03, []);
         this.dishInTool.setVisible(false);
         this.dishInTool.setAlpha(0.6);
-        gameState.objective.ingredients.forEach((ingredient, ind) => {
+        const orderedIngredients = [
+            Item.Oil,
+            Item.Egg,
+            Item.Chocolate,
+            Item.Flour,
+            Item.Butter,
+        ];
+
+        gameState.objective.ingredients.forEach((ingredient) => {
+            const ind = orderedIngredients.indexOf(ingredient.item);
             const scale = ingredient.item == Item.Egg ? 0.5 : 1;
             const offsetY = ingredient.item == Item.Egg ? 30 : 0;
             this.workspaceItems[ingredient.item] = new ItemRenderer(

@@ -114,7 +114,7 @@ export class Dashboard {
                 item.toString().replace('Egg', 'ביצה')
                     .replace('Flour', 'שקית קמח')
                     .replace('Oil', 'בקבוק שמן')
-                    .replace('Chocolate', 'חפישת שוקולד')
+                    .replace('Chocolate', 'חפיסת שוקולד')
                     .replace('Butter', 'חבילת חמאה')
         );
         const numberText = (gender == 'male' ?

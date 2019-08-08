@@ -60,9 +60,8 @@ export class CabineteScene extends Phaser.Scene {
                 this.items[item].stepX,
                 this.items[item].stepY,
             );
-            let leaving = false;
             this.items[item].itemRenderer.onPointerDown(() => {
-                if (!leaving) {
+                if (!this.leaving) {
                     gameState.playerTakenItem(item as Item, ItemLocation.Cabinet);
                     this.backToKitchen();
                 }
