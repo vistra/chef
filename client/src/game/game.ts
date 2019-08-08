@@ -5,6 +5,7 @@ import {FridgeScene} from "./scenes/fridge";
 import {CakeDecorationScene} from "./scenes/cake_decoration";
 import {CabineteScene} from "./scenes/cabinet";
 import {IntroScene} from "./scenes/intro";
+import {DinnerScene} from "./scenes/dinner";
 
 export const game = new Phaser.Game({
     type: Phaser.AUTO,
@@ -28,6 +29,7 @@ game.scene.add('fridge', FridgeScene);
 game.scene.add('cabinet', CabineteScene);
 game.scene.add('cake_decoration', CakeDecorationScene);
 game.scene.add('kitchen', KitchenScene);
+game.scene.add('dinner', DinnerScene);
 game.scene.add('intro', IntroScene, true);
 
 (window as any).game = game;

@@ -14,7 +14,7 @@ export class IntroScene extends Phaser.Scene {
         this.backgroundImage = this.physics.add.image(0, 0, 'background')
             .setOrigin(0, 0)
             .setScale(0.41);
-        this.frontImage = this.physics.add.image(100, 100, 'front')
+        this.frontImage = this.physics.add.image(100, 90, 'front')
             .setOrigin(0, 0)
             .setScale(0.6)
             .setInteractive()

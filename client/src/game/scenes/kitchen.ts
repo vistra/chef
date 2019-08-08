@@ -381,6 +381,8 @@ export class KitchenScene extends Phaser.Scene {
                     this.downPressed = true;
                     setTimeout(() => {
                         this.downPressed = false;
+                        this.stopStepSound();
+                        this.game.scene.switch('kitchen', 'dinner');
                     }, 3500)
                 }, 1500);
             }, 1000)
