@@ -12,6 +12,10 @@ export class Dashboard {
     private objectiveItemCountImage: Phaser.Physics.Arcade.Image;
     private hebInstructionsText: Phaser.GameObjects.Text;
     private hebObjectiveText: Phaser.GameObjects.Text;
+    private instructionAudioKey: string;
+
+    public dontUpdate: boolean = false;
+    private instructionsImage: Phaser.Physics.Arcade.Image;
 
     constructor(private scene: Phaser.Scene,
                 public x: number,
@@ -22,9 +26,12 @@ export class Dashboard {
     private create() {
         this.dashboardImage = this.scene.physics.add.image(this.x, this.y, 'dashboard')
                 .setOrigin(0, 0);
+        this.instructionsImage = this.scene.physics.add.image(this.x, this.y + 100, 'instructions')
+            .setOrigin(0, 0);
         this.soundButtonImage = this.scene.physics.add.image(this.x + 700, this.y + 19, 'sound_button')
-            .setOrigin(0,0);
-
+            .setOrigin(0,0)
+            .setInteractive();
+        this.soundButtonImage.on('pointerdown', () => this.sayInstructions());
         this.createObjective();
     }
 
@@ -136,25 +143,42 @@ export class Dashboard {
         this.hebObjectiveText.setPosition(this.x + 635 - this.hebObjectiveText.width, this.hebObjectiveText.y)
     }
 
+    private setInstructionAudio(key: string) {
+        if (this.instructionAudioKey != key) {
+            this.instructionAudioKey = key;
+            this.sayInstructions();
+        }
+    }
+
     public update() {
+        if (this.dontUpdate) {
+            return;
+        }
         const nextStep = gameState.getNextObjectiveStep();
         if (nextStep) {
             this.setItemImage(nextStep.item);
             this.setObjectiveText(nextStep.item, nextStep.count);
             this.objectiveCountText.setText(`${nextStep.count}`);
+            this.setInstructionAudio(`${nextStep.count}-${nextStep.item}`);
         } else if (gameState.state == 'dish_in_making') {
             this.objectiveGroup.getChildren().forEach((c: any) => c.setVisible(false));
-            this.setInstruction('That\'s it :) Now mix the ingredients.', '.כל הכבוד! עכשיו צריך לערבב את המרכיבים')
+            this.setInstruction('That\'s it :) Now mix the ingredients.', '.כל הכבוד! עכשיו צריך לערבב את המרכיבים');
+            this.setInstructionAudio('inst_mix');
         } else if (gameState.state == 'ingredients_mixed'){
-            this.setInstruction('Good! Now decorate the cake.', '.מצויין! עכשיו אפשר לקשט את העוגה')
+            this.setInstruction('Good! Now decorate the cake.', '.מצויין! עכשיו אפשר לקשט את העוגה');
+            this.setInstructionAudio('inst_decorate');
         } else if (gameState.state == 'dish_decorated'){
-            this.setInstruction('Alright! Now put the cake in the oven.', '.יפה מאוד! עכשיו אפשר לשים את העוגה בתנור')
+            this.setInstruction('Alright! Now put the cake in the oven.', '.יפה מאוד! עכשיו אפשר לשים את העוגה בתנור');
+            this.setInstructionAudio('inst_put_in_oven');
         } else if (gameState.state == 'dish_in_tool') {
             this.setInstruction('Very good! Now we wait...', '...מצויין! עכשיו ממתינים');
+            this.setInstructionAudio('inst_wait');
         } else if (gameState.state == 'dish_cooked') {
             this.setInstruction('It\'s ready! You can take it out of the oven', '.העוגה מוכנה! אפשר להוציא אותה מהתנור');
+            this.setInstructionAudio('inst_take_from_oven');
         } else if (gameState.state == 'player_took_cooked_dish') {
             this.setInstruction('Bete-avon!', '!בתיאבון');
+            this.setInstructionAudio('inst_beteavon');
         }
     }
 
@@ -187,4 +211,9 @@ export class Dashboard {
         }
 
     }
+
+    private sayInstructions() {
+        this.scene.sound.play(this.instructionAudioKey, {delay: 0.5});
+    }
+
 }

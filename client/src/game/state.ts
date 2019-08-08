@@ -68,11 +68,11 @@ class GameState {
         this.objective = {
             dish: 'cake',
             ingredients: [
-                {item: Item.Oil, count: 1},
-                // {item: Item.Egg, count: 5},
-                // {item: Item.Chocolate, count: 4},
-                // {item: Item.Flour, count: 3},
-                // {item: Item.Butter, count: 2},
+                // {item: Item.Oil, count: 1},
+                // {item: Item.Egg, count: 1},
+                // {item: Item.Chocolate, count: 1},
+                // {item: Item.Flour, count: 1},
+                // {item: Item.Butter, count: 1},
             ]
         };
         this.putItem(Item.Egg, ItemLocation.Fridge, 5);
@@ -133,11 +133,13 @@ class GameState {
     }
 
     playerTakenItem(item: Item, fromLocation: ItemLocation) {
-        assert(this.hasItem(item, fromLocation), `Item ${item} not available on location ${fromLocation}`);
-        this.releasePlayerItem();
-        this.removeItem(item, fromLocation);
-        this.player.holds = item;
-        this.player.itemOrigin = fromLocation;
+        if (this.state == "dish_in_making") {
+            assert(this.hasItem(item, fromLocation), `Item ${item} not available on location ${fromLocation}`);
+            this.releasePlayerItem();
+            this.removeItem(item, fromLocation);
+            this.player.holds = item;
+            this.player.itemOrigin = fromLocation;
+        }
     }
 
     playerMixedIngredients() {

@@ -9,6 +9,7 @@ export class CakeDecorationScene extends Phaser.Scene {
 
     private decorations: ICakeDecoration[] = [];
     private cake: Cake;
+    private squishSound: Phaser.Sound.BaseSound;
 
     preload() {
         this.load.image('cake_decoration_background', '/assets/cake_decoration_background.png');
@@ -31,6 +32,8 @@ export class CakeDecorationScene extends Phaser.Scene {
         this.load.image('topping16', '/assets/topping16.png');
         this.load.image('turqoise', '/assets/cupcake_turqoise.png');
         this.load.image('v', '/assets/v.png');
+
+        this.load.audio('squish', '/assets/squish.mp3');
     }
 
     create() {
@@ -39,6 +42,7 @@ export class CakeDecorationScene extends Phaser.Scene {
         this.cake = new Cake(this, 150, 10, 0.37,[]);
 
         this.cake.cakeImage.on('pointerdown', (pointer: Pointer) => {
+            this.squishSound.play('squish', {volume: 0.2});
             this.addDecoration(pointer);
         });
 
@@ -83,6 +87,13 @@ export class CakeDecorationScene extends Phaser.Scene {
                 this.selectBrush(`topping${topping.index + 1}`);
             })
         }
+
+        this.squishSound = this.sound.add('squish');
+        this.squishSound.addMarker({
+            name: 'squish',
+            start: 28.5,
+            duration: 1
+        })
     }
 
     update() {
