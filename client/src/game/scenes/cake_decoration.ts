@@ -11,30 +11,7 @@ export class CakeDecorationScene extends Phaser.Scene {
     private cake: Cake;
     private squishSound: Phaser.Sound.BaseSound;
 
-    preload() {
-        this.load.image('cake_decoration_background', '/assets/cake_decoration_background.png');
-        this.load.image('cake_big', '/assets/cake.png');
-        this.load.image('topping1', '/assets/topping1.png');
-        this.load.image('topping2', '/assets/topping2.png');
-        this.load.image('topping3', '/assets/topping3.png');
-        this.load.image('topping4', '/assets/topping4.png');
-        this.load.image('topping5', '/assets/topping5.png');
-        this.load.image('topping6', '/assets/topping6.png');
-        this.load.image('topping7', '/assets/topping7.png');
-        this.load.image('topping8', '/assets/topping8.png');
-        this.load.image('topping9', '/assets/topping9.png');
-        this.load.image('topping10', '/assets/topping10.png');
-        this.load.image('topping11', '/assets/topping11.png');
-        this.load.image('topping12', '/assets/topping12.png');
-        this.load.image('topping13', '/assets/topping13.png');
-        this.load.image('topping14', '/assets/topping14.png');
-        this.load.image('topping15', '/assets/topping15.png');
-        this.load.image('topping16', '/assets/topping16.png');
-        this.load.image('turqoise', '/assets/cupcake_turqoise.png');
-        this.load.image('v', '/assets/v.png');
-
-        this.load.audio('squish', '/assets/squish.mp3');
-    }
+    preload() {}
 
     create() {
         this.add.image(0, 0, 'cake_decoration_background')

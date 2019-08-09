@@ -29,13 +29,6 @@ export class CabineteScene extends Phaser.Scene {
     private backButton: Phaser.Events.EventEmitter;
 
     preload() {
-        this.load.image('cabinet_background', '/assets/cabinet.jpg');
-        this.load.image('back', '/assets/back-button.png');
-        this.load.image('chocolate', '/assets/chocolate.png');
-        this.load.image('oil', '/assets/oil.png');
-        this.load.image('flour', '/assets/flour.png');
-
-        this.load.audio('closet', '/assets/closet.mp3');
     }
 
     create() {

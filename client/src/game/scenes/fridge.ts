@@ -27,15 +27,7 @@ export class FridgeScene extends Phaser.Scene {
     private closetSounds: Phaser.Sound.BaseSound;
     private backButton: Phaser.Events.EventEmitter;
 
-    preload() {
-        // this.load.image('fridge_background', '/assets/fridge_background.png');
-        this.load.image('fridge_background', '/assets/stock-vector-fridge-in-cartoon-style-open-and-closed-refrigerator-vector-illustration-716580310.jpg');
-        this.load.image('back', '/assets/back-button.png');
-        this.load.image('egg', '/assets/egg.png');
-        this.load.image('butter', '/assets/butter.png');
-
-        this.load.audio('fridge', '/assets/fridge.mp3');
-    }
+    preload() {}
 
     create() {
         this.fridgeImage = this.add.image(20, 0, 'fridge_background')
