@@ -171,11 +171,11 @@ class GameState {
         this.objective = {
             dish: 'cake',
             ingredients: _.shuffle([
-                // {item: Item.Oil, count: _.random(1,3)},
-                // {item: Item.Egg, count: _.random(1,3)},
-                // {item: Item.Chocolate, count: _.random(1,3)},
-                // {item: Item.Flour, count: _.random(1,3)},
-                // {item: Item.Butter, count: _.random(1,3)},
+                {item: Item.Oil, count: _.random(1,3)},
+                {item: Item.Egg, count: _.random(1,3)},
+                {item: Item.Chocolate, count: _.random(1,3)},
+                {item: Item.Flour, count: _.random(1,3)},
+                {item: Item.Butter, count: _.random(1,3)},
             ])
         };
         this.setItemCount(Item.Egg, ItemLocation.Fridge, 5);

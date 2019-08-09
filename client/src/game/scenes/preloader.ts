@@ -4,12 +4,13 @@ import {gameState, Items} from "../state";
 export class PreloaderScene extends Phaser.Scene {
     private backgroundImage: Phaser.Physics.Arcade.Image;
     private progressbar: Phaser.GameObjects.Graphics;
+    private window: Phaser.GameObjects.Graphics;
+    private loadingText: Phaser.GameObjects.Text;
 
     preload() {
         this.load.on('progress', (p) => this.onProgress(p));
-        this.load.on('complete', () => this.onComplete());
+        this.load.once('complete', () => this.onComplete());
 
-        this.load.image('intro_background', '/assets/intro.png');
         this.load.image('intro_front', '/assets/intro-front.png');
         this.load.image('dashboard', '/assets/dashboard.png');
         this.load.image('sound_button', '/assets/sound_button.png');
@@ -89,27 +90,33 @@ export class PreloaderScene extends Phaser.Scene {
         this.load.image('dinner', '/assets/dinner2.png');
         this.load.image('replay', '/assets/replay.png');
         this.load.audio('happybirthday_song', '/assets/happybirthday.mp3');
-    }
 
-    create() {
         this.backgroundImage = this.physics.add.image(0, 0, 'intro_background')
             .setOrigin(0, 0)
             .setScale(0.41);
 
+        this.window = this.add.graphics()
+            .fillStyle(0x99cc, 1)
+            .fillRect(170, 240, 430, 110);
+
+        this.loadingText = this.add.text(335, 270, "Loading..");
+
         this.progressbar = this.add.graphics();
     }
 
+    create() {
+    }
+
     private onProgress(p: number) {
-        const width = 400;
+        const width = 370;
         const height = 20;
         const x = 200;
-        const y = 200;
-        const xStart = x - width / 2;
-        const yStart = y - height / 2;
+        const y = 300;
 
         if (this.progressbar) {
             this.progressbar.fillStyle(0xffffff, 1);
-            this.progressbar.fillRect(xStart, yStart, p * width, height);
+            this.progressbar.fillRect(x, y, p * width, height);
+            this.loadingText.setText(`Loading.. (${Math.floor(p*100)}%)`);
         }
     }
 

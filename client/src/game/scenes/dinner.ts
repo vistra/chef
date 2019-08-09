@@ -37,8 +37,15 @@ export class DinnerScene extends Phaser.Scene {
     }
 
     private newGame() {
-        gameState.newGame();
         this.song.stop();
-        this.game.scene.switch('dinner', 'kitchen');
+        this.game.scene.getScenes(null).forEach(
+            s => {
+                if (s.scene.key != 'preload' && s.scene.key != 'init' && s.scene.key != 'dinner') {
+                    s.scene.stop();
+                }
+            }
+        );
+        gameState.newGame();
+        this.scene.start('intro');
     }
 }

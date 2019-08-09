@@ -7,6 +7,7 @@ import {CabineteScene} from "./scenes/cabinet";
 import {IntroScene} from "./scenes/intro";
 import {DinnerScene} from "./scenes/dinner";
 import {PreloaderScene} from "./scenes/preloader";
+import {InitScene} from "./scenes/init";
 
 export const game = new Phaser.Game({
     type: Phaser.AUTO,
@@ -22,7 +23,7 @@ export const game = new Phaser.Game({
         touch: true
     },
     width: 800,
-    height: 600
+    height: 565
 });
 
 game.scene.add('menu', MenuScene);
@@ -32,6 +33,7 @@ game.scene.add('cake_decoration', CakeDecorationScene);
 game.scene.add('kitchen', KitchenScene);
 game.scene.add('dinner', DinnerScene);
 game.scene.add('intro', IntroScene);
-game.scene.add('preloader', PreloaderScene, true);
+game.scene.add('preloader', PreloaderScene);
+game.scene.add('init', InitScene, true);
 
 (window as any).game = game;

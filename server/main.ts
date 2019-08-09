@@ -5,6 +5,10 @@ import * as path from "path";
 
 const app = express();
 
+app.use((req, res, next) => {
+    // setTimeout(() => next(), 100)
+    next();
+});
 app.use("/assets", express.static(path.join(__dirname, '../../client/assets')));
 
 if (config.useWebpackDevMiddleware) {

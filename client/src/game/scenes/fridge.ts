@@ -24,12 +24,14 @@ export class FridgeScene extends Phaser.Scene {
     };
     private fridgeImage: Phaser.GameObjects.Image;
     private fridgeSounds: Phaser.Sound.BaseSound;
-    private closetSounds: Phaser.Sound.BaseSound;
     private backButton: Phaser.Events.EventEmitter;
+    private leaving: boolean  = false;
+
 
     preload() {}
 
     create() {
+        this.leaving = false;
         this.fridgeImage = this.add.image(20, 0, 'fridge_background')
             .setOrigin(0, 0)
             .setScale(0.8, 0.5);
@@ -66,7 +68,6 @@ export class FridgeScene extends Phaser.Scene {
             start: 10,
             duration: 1
         });
-
     }
 
     update() {
@@ -78,8 +79,6 @@ export class FridgeScene extends Phaser.Scene {
             this.items[item].itemRenderer.setCount(gameState.itemCount(item as Item, ItemLocation.Fridge));
         }
     }
-
-    private leaving: boolean  = false;
 
     private backToKitchen() {
         if (!this.leaving) {

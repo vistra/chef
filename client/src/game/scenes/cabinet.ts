@@ -27,11 +27,15 @@ export class CabineteScene extends Phaser.Scene {
     private cabinet: Phaser.GameObjects.Image;
     private closetSounds: Phaser.Sound.BaseSound;
     private backButton: Phaser.Events.EventEmitter;
+    private leaving: boolean  = false;
+
 
     preload() {
     }
 
     create() {
+        this.leaving = false;
+
         this.cabinet = this.add.image(0, 0, 'cabinet_background')
             .setOrigin(0, 0)
             .setScale(0.825, 0.528);
@@ -78,8 +82,6 @@ export class CabineteScene extends Phaser.Scene {
             this.items[item].itemRenderer.setCount(gameState.itemCount(item as Item, ItemLocation.Cabinet));
         }
     }
-
-    private leaving: boolean  = false;
 
     private backToKitchen() {
         if (!this.leaving) {

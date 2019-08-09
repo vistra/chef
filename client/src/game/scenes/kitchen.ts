@@ -24,11 +24,15 @@ export class KitchenScene extends Phaser.Scene {
     private ovenSound: Phaser.Sound.BaseSound;
     private ovenOpenCloseSound: Phaser.Sound.BaseSound;
     private downPressed: boolean;
+    private mixingIngredients = false;
 
     preload() {
     }
 
     create() {
+        this.downPressed = false;
+        this.mixingIngredients = false;
+
         this.kitchen_background = this.add.image(0, 0, 'kitchen_background')
             .setOrigin(0,0)
             .setScale(0.8,0.65);
@@ -256,7 +260,6 @@ export class KitchenScene extends Phaser.Scene {
         this.game.scene.switch('kitchen', 'cake_decoration');
     }
 
-    private mixingIngredients = false;
     private async mixIngredients() {
         if (!this.mixingIngredients) {
             this.mixingIngredients = true;
@@ -319,7 +322,7 @@ export class KitchenScene extends Phaser.Scene {
                         this.downPressed = false;
                         this.stopStepSound();
                         this.game.scene.switch('kitchen', 'dinner');
-                    }, 3500)
+                    }, 2500)
                 }, 1500);
             }, 1000)
 
