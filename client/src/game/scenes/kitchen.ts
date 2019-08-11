@@ -113,10 +113,6 @@ export class KitchenScene extends Phaser.Scene {
             'egg'
         ).setDepth(200);
 
-        this.playerGroup = this.physics.add.group();
-        this.playerGroup.add(this.player);
-        this.playerGroup.add(this.playerItem);
-
         // Sounds
         this.stepSound = this.sound.add('steps', {'loop': true, detune: 500, volume: 1});
         this.fridgeSounds = this.sound.add('fridge');
@@ -179,7 +175,7 @@ export class KitchenScene extends Phaser.Scene {
             this.playerDirection = 'right';
             this.startStepSound();
         } else {
-            this.playerGroup.setVelocityX(0);
+            this.player.setVelocityX(0);
             this.player.anims.play('chef_stand_anim', true)
             this.stopStepSound();
         }
@@ -318,6 +314,7 @@ export class KitchenScene extends Phaser.Scene {
                 this.dashboard.dontUpdate = false;
                 setTimeout(() => {
                     this.downPressed = true;
+                    this.player.setCollideWorldBounds(false);
                     setTimeout(() => {
                         this.downPressed = false;
                         this.stopStepSound();

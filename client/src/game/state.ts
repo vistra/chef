@@ -63,12 +63,6 @@ class GameState {
         [ItemLocation.Cabinet]: {},
     };
     
-    fridgeItems: IItems = {};
-
-    cabinetItems: IItems = {};
-
-    workspaceItems: IItems = {};
-
     dishDecoration: TDishDecoration;
 
     state: "dish_in_making" | "ingredients_mixed" | "dish_decorated" | "player_took_dish" | "dish_in_tool" | "dish_cooked" | "player_took_cooked_dish";
@@ -177,6 +171,11 @@ class GameState {
                 {item: Item.Flour, count: _.random(1,3)},
                 {item: Item.Butter, count: _.random(1,3)},
             ])
+        };
+        this.items = {
+            [ItemLocation.Workspace]: {},
+            [ItemLocation.Fridge]: {},
+            [ItemLocation.Cabinet]: {},
         };
         this.setItemCount(Item.Egg, ItemLocation.Fridge, 5);
         this.setItemCount(Item.Butter, ItemLocation.Fridge, 3);

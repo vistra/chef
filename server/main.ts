@@ -31,8 +31,8 @@ if (config.useWebpackDevMiddleware) {
         path: '/__webpack_hmr'
     }));
 } else {
-  console.log("serving static bundle");
-  app.use("/dist", express.static(path.join(__dirname, '../../dist')));
+  console.log("serving static bundle from " + path.join(__dirname, '../dist'));
+  app.use("/dist", express.static(path.join(__dirname, '../dist')));
 }
 
 const server = app.listen(config.server_port, function() {
