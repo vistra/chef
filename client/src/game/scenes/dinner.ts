@@ -12,17 +12,17 @@ export class DinnerScene extends Phaser.Scene {
     }
 
     create() {
-        this.backgroundImage = this.physics.add.image(0, 0, 'dinner')
+        this.backgroundImage = this.physics.add.image(40, 0, 'dinner')
             .setScale(0.26)
             .setOrigin(0, 0);
             // .setScale(0.41);
         this.replayButton = this.physics.add
-            .image(630, 25, 'replay')
+            .image(670, 25, 'replay')
             .setOrigin(0, 0)
             .setScale(0.3)
             .setInteractive()
             .on('pointerdown', () => this.newGame());
-        this.cake = new Cake(this, 240, 310, 0.17, gameState.dishDecoration);
+        this.cake = new Cake(this, 280, 310, 0.17, gameState.dishDecoration);
 
         this.song = this.sound.add('happybirthday_song');
         this.song.addMarker({

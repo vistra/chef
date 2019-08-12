@@ -34,8 +34,8 @@ if (config.useWebpackDevMiddleware) {
   console.log("serving static bundle from " + path.join(__dirname, '../dist'));
   app.use("/dist", express.static(path.join(__dirname, '../dist')));
 }
-
-const server = app.listen(config.server_port, function() {
+app.use("/dist2", express.static(path.join(__dirname, '../dist2')));
+const server = app.listen(config.server_port, '0.0.0.0', function() {
     app.emit('listening');
     return console.info(`Express server listening on port ${server.address().port}`);
 });

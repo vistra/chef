@@ -15,11 +15,20 @@ export class Dashboard {
     private instructionAudioKey: string;
 
     public dontUpdate: boolean = false;
+
+    public leftPressed: boolean = false;
+    public rightPressed: boolean = false;
+
     private instructionsImage: Phaser.Physics.Arcade.Image;
+    private leftButton: Phaser.Physics.Arcade.Image;
+    private rightButton: Phaser.Physics.Arcade.Image;
+    private spaceButton: Phaser.Physics.Arcade.Image;
+    private spacePressed: boolean;
 
     constructor(private scene: Phaser.Scene,
                 public x: number,
-                public y: number) {
+                public y: number,
+                private onSpaceClick: ()=>void) {
         this.create();
     }
 
@@ -28,6 +37,46 @@ export class Dashboard {
                 .setOrigin(0, 0);
         this.instructionsImage = this.scene.physics.add.image(this.x, this.y + 100, 'instructions')
             .setOrigin(0, 0);
+        this.leftButton = this.scene.physics.add.image(this.x, this.y + 100, 'sound_button')
+            .setAlpha(0.001)
+            .setOrigin(0, 0)
+            .setScale(1, 1)
+            .setPosition(660, 505)
+            .setInteractive();
+        this.leftButton.on('pointerdown', () => {
+                this.leftPressed = true;
+                this.rightPressed = false;
+            });
+
+        this.rightButton = this.scene.physics.add.image(this.x + 100, this.y + 100, 'sound_button')
+            .setAlpha(0.001)
+            .setOrigin(0, 0)
+            .setScale(1.2, 1)
+            .setPosition(732, 505)
+            .setInteractive();
+        this.rightButton.on('pointerdown', () => {
+            this.leftPressed = false;
+            this.rightPressed = true;
+        });
+
+        this.spaceButton = this.scene.physics.add.image(this.x + 200, this.y + 100, 'sound_button')
+            .setAlpha(0.001)
+            .setOrigin(0, 0)
+            .setPosition(310, 505)
+            .setScale(3.5, 1)
+            .setInteractive();
+        this.spaceButton.on('pointerdown', () => {
+            if (!this.spacePressed) {
+                this.spacePressed = true;
+                this.onSpaceClick();
+            }
+        });
+        this.scene.input.on('pointerup', () => {
+            this.leftPressed = false;
+            this.rightPressed = false;
+            this.spacePressed = false;
+        });
+
         this.soundButtonImage = this.scene.physics.add.image(this.x + 700, this.y + 19, 'sound_button')
             .setOrigin(0,0)
             .setInteractive();

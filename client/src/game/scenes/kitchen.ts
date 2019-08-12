@@ -23,14 +23,14 @@ export class KitchenScene extends Phaser.Scene {
     private magicSounds: Phaser.Sound.BaseSound;
     private ovenSound: Phaser.Sound.BaseSound;
     private ovenOpenCloseSound: Phaser.Sound.BaseSound;
-    private downPressed: boolean;
+    private leftPressed: boolean;
     private mixingIngredients = false;
 
     preload() {
     }
 
     create() {
-        this.downPressed = false;
+        this.leftPressed = false;
         this.mixingIngredients = false;
 
         this.kitchen_background = this.add.image(0, 0, 'kitchen_background')
@@ -41,7 +41,7 @@ export class KitchenScene extends Phaser.Scene {
             .setEmitOnRepeat(true)
             .on('down', () => this.handleSpaceClick());
 
-        this.dashboard = new Dashboard(this, 0, 400);
+        this.dashboard = new Dashboard(this, 0, 400, () => this.handleSpaceClick());
 
         // Workspace
         // this.dishImage = this.physics.add.image(540, 150, 'cake_small');
@@ -162,13 +162,13 @@ export class KitchenScene extends Phaser.Scene {
     private playerDirection: "left" | "right";
     private updatePlayer() {
         const cursors = this.input.keyboard.createCursorKeys();
-        if (cursors.left.isDown || this.downPressed) {
+        if (cursors.left.isDown || this.leftPressed || this.dashboard.leftPressed) {
             this.player.setVelocityX(-300);
             this.player.anims.play('chef_walk_left_anim', true);
             this.player.setScale(1, 1);
             this.playerDirection = 'left';
             this.startStepSound();
-        } else if (cursors.right.isDown) {
+        } else if (cursors.right.isDown || this.dashboard.rightPressed) {
             this.player.setVelocityX(300);
             this.player.anims.play('chef_walk_left_anim', true);
             this.player.setScale(-1, 1);
@@ -231,13 +231,13 @@ export class KitchenScene extends Phaser.Scene {
     }
 
     private handleSpaceClick() {
-        if (this.player.x > 630 && this.player.x < 730) {
+        if (this.player.x > 610 && this.player.x < 730) {
             this.goToFridge();
-        } else if (this.player.x > 235 && this.player.x < 370) {
+        } else if (this.player.x > 210 && this.player.x < 370) {
             this.goToCabinet();
-        } else if (this.player.x > 100 && this.player.x < 200) {
+        } else if (this.player.x < 200) {
             this.workspaceInteraction();
-        } else if (this.player.x > 430 && this.player.x < 510) {
+        } else if (this.player.x > 400 && this.player.x < 510) {
             this.ovenInteraction();
         }
     }
@@ -313,10 +313,10 @@ export class KitchenScene extends Phaser.Scene {
             setTimeout(() => {
                 this.dashboard.dontUpdate = false;
                 setTimeout(() => {
-                    this.downPressed = true;
+                    this.leftPressed = true;
                     this.player.setCollideWorldBounds(false);
                     setTimeout(() => {
-                        this.downPressed = false;
+                        this.leftPressed = false;
                         this.stopStepSound();
                         this.game.scene.switch('kitchen', 'dinner');
                     }, 2500)

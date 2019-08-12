@@ -9,31 +9,48 @@ import {DinnerScene} from "./scenes/dinner";
 import {PreloaderScene} from "./scenes/preloader";
 import {InitScene} from "./scenes/init";
 
-export const game = new Phaser.Game({
-    type: Phaser.AUTO,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 0 },
-            debug: false
-        }
-    },
-    input: {
-        mouse: true,
-        touch: true
-    },
-    width: 800,
-    height: 565
+document.addEventListener("DOMContentLoaded", function(event) {
+    const createGame = (height=560, width=800) => {
+        const game = new Phaser.Game({
+            type: Phaser.AUTO,
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 0 },
+                    debug: false
+                }
+            },
+            input: {
+                mouse: true,
+                touch: true
+            },
+            scale: {
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH,
+                // width: 800,
+                // height: 565
+            },
+            parent: 'gamecontainer',
+            width,
+            height
+        });
+
+        game.scene.add('menu', MenuScene);
+        game.scene.add('fridge', FridgeScene);
+        game.scene.add('cabinet', CabineteScene);
+        game.scene.add('cake_decoration', CakeDecorationScene);
+        game.scene.add('kitchen', KitchenScene);
+        game.scene.add('dinner', DinnerScene);
+        game.scene.add('intro', IntroScene);
+        game.scene.add('preloader', PreloaderScene);
+        game.scene.add('init', InitScene, true);
+
+        return game;
+    };
+
+    const game = createGame();
+
+    (window as any).game = game;
 });
 
-game.scene.add('menu', MenuScene);
-game.scene.add('fridge', FridgeScene);
-game.scene.add('cabinet', CabineteScene);
-game.scene.add('cake_decoration', CakeDecorationScene);
-game.scene.add('kitchen', KitchenScene);
-game.scene.add('dinner', DinnerScene);
-game.scene.add('intro', IntroScene);
-game.scene.add('preloader', PreloaderScene);
-game.scene.add('init', InitScene, true);
 
-(window as any).game = game;

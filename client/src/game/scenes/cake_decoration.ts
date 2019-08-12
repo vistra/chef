@@ -14,6 +14,7 @@ export class CakeDecorationScene extends Phaser.Scene {
     preload() {}
 
     create() {
+        this.decorations = [];
         this.add.image(0, 0, 'cake_decoration_background')
             .setOrigin(0, 0);
         this.cake = new Cake(this, 150, 10, 0.37,[]);
